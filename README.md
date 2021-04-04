@@ -1,4 +1,4 @@
-# Space-ship
+# Spaceship
 ## First SDL2 game
 - Using C++ with CodeBlock and SDL2
 ## Main game stucture 
