@@ -83,7 +83,7 @@ void Ship::renderCurrent(SDL_Renderer *&gRenderer) {
      //SDL_RenderClear( gRenderer );
 
     //Render texture to screen
-    this->shipTexture.render(gRenderer, this->get_x(), this->get_y());
+    this->shipTexture.render(gRenderer, this->get_x(), this->get_y(), NULL, angle);
 
     return;
 }
@@ -97,9 +97,15 @@ void Ship::handleEvent( SDL_Event& e )
         //Adjust the velocity
         switch( e.key.keysym.sym )
         {
-            case SDLK_UP: y_velocity -= VELOCITY;  break;
-            case SDLK_DOWN: y_velocity += VELOCITY;  break;
-            case SDLK_LEFT: x_velocity -= VELOCITY;  break;
+            case SDLK_UP:
+                angle -= 30;
+                y_velocity -= VELOCITY;  break;
+            case SDLK_DOWN:
+                angle += 30;
+                y_velocity += VELOCITY;  break;
+            case SDLK_LEFT:
+                angle += 180;
+                x_velocity -= VELOCITY;  break;
             case SDLK_RIGHT: x_velocity += VELOCITY;  break;
         }
     }
@@ -109,9 +115,15 @@ void Ship::handleEvent( SDL_Event& e )
         //Adjust the velocity
         switch( e.key.keysym.sym )
         {
-            case SDLK_UP: y_velocity += VELOCITY; break;
-            case SDLK_DOWN: y_velocity -= VELOCITY; break;
-            case SDLK_LEFT: x_velocity += VELOCITY; break;
+            case SDLK_UP:
+                angle += 30;
+                y_velocity += VELOCITY; break;
+            case SDLK_DOWN:
+                angle -= 30;
+                y_velocity -= VELOCITY; break;
+            case SDLK_LEFT:
+                angle -= 180;
+                x_velocity += VELOCITY; break;
             case SDLK_RIGHT: x_velocity -= VELOCITY; break;
         }
     }

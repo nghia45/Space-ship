@@ -46,7 +46,7 @@ class Ship{
         int y_velocity = 0;
         int x;
         int y;
-
+        int angle = 0;
 };
 
 
