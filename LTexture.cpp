@@ -24,13 +24,9 @@ bool LTexture::loadFromFile( std::string path, SDL_Renderer* &gRenderer)
 
 	//The final texture
 	SDL_Texture* newTexture = NULL;
-	cout << "ltexture load 1" << path.c_str() << endl;
-
 
 	//Load image at specified path
 	SDL_Surface* loadedSurface = IMG_Load( path.c_str() );
-	cout << "+++" << endl;
-
 
 	if( loadedSurface == NULL )
 	{
@@ -65,7 +61,6 @@ bool LTexture::loadFromFile( std::string path, SDL_Renderer* &gRenderer)
 
 void LTexture::free()
 {
-	cout << mTexture << endl;
 	//Free texture if it exists
 	if( mTexture != NULL )
 	{
@@ -74,8 +69,6 @@ void LTexture::free()
 		mWidth = 0;
 		mHeight = 0;
 	}
-
-	cout << "-----" << endl;
 }
 
 void LTexture::setColor( Uint8 red, Uint8 green, Uint8 blue )
@@ -107,7 +100,6 @@ void LTexture::render(SDL_Renderer* &gRenderer, int x, int y, SDL_Rect* clip, do
 		renderQuad.w = clip->w;
 		renderQuad.h = clip->h;
 	}
-	// cout << x << " " << y  << mTexture << " " << endl;
 
 	//Render to screen
 	SDL_RenderCopyEx( gRenderer, mTexture, clip, &renderQuad, angle, center, flip );
