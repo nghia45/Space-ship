@@ -7,7 +7,6 @@
 #include "defines.h"
 
 #include "Ship.h"
-//#include "Map.h"
 
 class Engine{
     public:

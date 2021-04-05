@@ -36,7 +36,7 @@ class Ship{
         string shipTexturePath  = "assert/spaceship.png";
 
     private:
-        // SDL_Texture *pacmanTexture;
+        // SDL_Texture *shipTexture;
         int shipWidth;
         int shipHeight;
         //int state;
