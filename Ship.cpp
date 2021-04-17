@@ -1,5 +1,4 @@
 #include "Ship.h"
-#include <iostream>
 
 using namespace std;
 
@@ -50,7 +49,7 @@ int Ship::getHeight() {
 }
 
 int Ship::getVelocity() {
-    return this->VELOCITY;
+    return SHIP_VELOCITY;
 }
 
 int Ship::get_x() {
@@ -98,15 +97,15 @@ void Ship::handleEvent( SDL_Event& e )
         switch( e.key.keysym.sym )
         {
             case SDLK_UP:
-                angle -= 30;
-                y_velocity -= VELOCITY;  break;
+                angle -= 20;
+                y_velocity -= SHIP_VELOCITY;  break;
             case SDLK_DOWN:
-                angle += 30;
-                y_velocity += VELOCITY;  break;
+                angle += 20;
+                y_velocity += SHIP_VELOCITY;  break;
             case SDLK_LEFT:
                 angle += 180;
-                x_velocity -= VELOCITY;  break;
-            case SDLK_RIGHT: x_velocity += VELOCITY;  break;
+                x_velocity -= SHIP_VELOCITY;  break;
+            case SDLK_RIGHT: x_velocity += SHIP_VELOCITY;  break;
         }
     }
     //If a key was released
@@ -116,38 +115,41 @@ void Ship::handleEvent( SDL_Event& e )
         switch( e.key.keysym.sym )
         {
             case SDLK_UP:
-                angle += 30;
-                y_velocity += VELOCITY; break;
+                angle += 20;
+                y_velocity += SHIP_VELOCITY; break;
             case SDLK_DOWN:
-                angle -= 30;
-                y_velocity -= VELOCITY; break;
+                angle -= 20;
+                y_velocity -= SHIP_VELOCITY; break;
             case SDLK_LEFT:
                 angle -= 180;
-                x_velocity += VELOCITY; break;
-            case SDLK_RIGHT: x_velocity -= VELOCITY; break;
+                x_velocity += SHIP_VELOCITY; break;
+            case SDLK_RIGHT:
+                x_velocity -= SHIP_VELOCITY; break;
         }
     }
+
 }
 
 void Ship::move()
 {
-    //Move the dot left or right
-    this->x += this->x_velocity;
+    //Move the ship left or right
+    x += x_velocity;
 
-    //If the dot went too far to the left or right
+    //If the ship went too far to the left or right
     if( ( x < 0 ) || ( x + this->getWidth() > SCREEN_WIDTH ) )
     {
         //Move back
         x -= x_velocity;
     }
 
-    //Move the dot up or down
+    //Move the ship up or down
     y += y_velocity;
 
-    //If the dot went too far up or down
+    //If the ship went too far up or down
     if( ( y < 0 ) || ( y + this->getHeight() > SCREEN_HEIGHT ) )
     {
         //Move back
         y -= y_velocity;
     }
 }
+

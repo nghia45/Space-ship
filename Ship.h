@@ -5,6 +5,7 @@
 #include<SDL_image.h>
 #include<iostream>
 #include "LTexture.h"
+#include "OtherObject.h"
 #include "defines.h"
 
 using namespace std;
@@ -34,13 +35,11 @@ class Ship{
         // Using class LTexture
         LTexture shipTexture;
         string shipTexturePath  = "assert/spaceship.png";
-
     private:
-        // SDL_Texture *shipTexture;
+        // SDL_Texture *pacmanTexture;
         int shipWidth;
         int shipHeight;
         //int state;
-        const int VELOCITY = 10;
 
         int x_velocity = 0;
         int y_velocity = 0;

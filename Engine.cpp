@@ -66,7 +66,11 @@ bool Engine::initWindowAndRender() {
 
 bool Engine::initShip(SDL_Renderer * &gRenderer) {
     this->ship = new Ship(gRenderer);
+    return true;
+}
 
+bool Engine::initBullet(SDL_Renderer * &gRenderer) {
+    this->bullet = new Bullet(gRenderer);
     return true;
 }
 
@@ -118,7 +122,6 @@ void Engine::close() {
 	//Free ship
 	//this->ship->free();
     delete(this->ship);
-
 	//Destroy window
 	SDL_DestroyRenderer( this->gRenderer );
 	SDL_DestroyWindow( this->gWindow );
@@ -150,12 +153,16 @@ bool Engine::run() {
             {
                 quit = true;
             }
+            if( e.type == SDL_KEYDOWN) if(e.key.keysym.sym == SDLK_ESCAPE) quit = true;
 
-			// Handle event for pacman control
+			// Handle event for ship control
 			this->ship->handleEvent(e);
+			if( e.type == SDL_KEYDOWN) if(e.key.keysym.sym == SDLK_SPACE){
+                this->initBullet(this->gRenderer);
+                this->bullet->set_x(this->ship->get_x() + 45 );
+                this->bullet->set_y(this->ship->get_y() + 10  );
+            }
         }
-
-        // Handle game logic in here
         /*
         TODO: add game logic in here
         */
@@ -170,9 +177,18 @@ bool Engine::run() {
 		SDL_RenderCopy( gRenderer, background, NULL, NULL );
 
 		this->ship->move();
+
         // First, just render the character
         this->ship->renderCurrent(this->gRenderer);
 
+        if(bullet != NULL){
+            this->bullet->fire();
+            this->bullet->renderCurrent(this->gRenderer);
+            if(this->bullet->get_health() == 0){
+                delete(this->bullet);
+                bullet = NULL;
+            }
+        }
 		SDL_RenderPresent(gRenderer);
 		SDL_Delay(50);
     }

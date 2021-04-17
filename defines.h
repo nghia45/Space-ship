@@ -4,5 +4,7 @@
 #define SCREEN_WIDTH 1280
 #define SCREEN_HEIGHT 720
 
+#define SHIP_VELOCITY 10;
+#define BULLET_VELOCITY 20;
 
 #endif // DEFINES_H
