@@ -43,8 +43,8 @@ class Engine{
         bool initAsteroid(SDL_Renderer * &gRenderer, Asteroid* &asteroid);
 
         // high score
-        void set_highscore(int highscore[10]);
-        int* get_highscore();
+        void set_highscore(int highscore);
+        int get_highscore();
     private:
         // window game and renderer to draw
         SDL_Window* gWindow;
@@ -57,10 +57,12 @@ class Engine{
         TTF_Font* gameOverFont_0;
         TTF_Font* gameOverFont_1;
         TTF_Font* gameOverFont_2;
+        TTF_Font* highscoreFont;
         LTexture gameOverText[3];
         LTexture gameOverScoreText;
         LTexture scoreboardText;
         LTexture scoreText;
+        LTexture highscoreText;
         // the game's characters, map, etc.
         Ship* ship;
         std::vector<Bullet*> prvBulletLoad;

@@ -11,8 +11,8 @@
 
 using namespace std;
 
-int* Engine::get_highscore(){
-    int* highscore = new int[10];
+int Engine::get_highscore(){
+    int highscore;
     ifstream f;
     f.open("score.txt");
     if(f.is_open())
@@ -20,12 +20,18 @@ int* Engine::get_highscore(){
         int num;
         while(!f.eof()){
             f>>num;
-            *highscore=num;
-            highscore++;
+            highscore = num;
         }
     }
     f.close();
     return highscore;
+}
+
+void Engine::set_highscore(int highscore){
+    ofstream f;
+    f.open("score.txt");
+    if(f.is_open()) f<<highscore;
+    f.close();
 }
 
 bool Engine::initWindowAndRender() {
@@ -245,6 +251,12 @@ bool Engine::loadTextFont() {
                 success = false;
             }
         }
+        highscoreFont = TTF_OpenFont("assert/Font/LFAXD.ttf", 100);
+        if( highscoreFont == NULL )
+        {
+            printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
+            success = false;
+        }
     }
     return success;
 }
@@ -289,6 +301,7 @@ void Engine::closeGameplay() {
             prvAsteroidLoad[i]->set_health(0);
         }
     }
+    if(this->get_highscore() < score) this->set_highscore(score);
     score = 0;
     return;
 }
@@ -319,8 +332,14 @@ void Engine::close() {
     //Free global font
     TTF_CloseFont( gameOverFont_0 );
     gameOverFont_0 = NULL;
+    TTF_CloseFont( gameOverFont_1);
+    gameOverFont_1 = NULL;
     TTF_CloseFont( gameOverFont_2);
     gameOverFont_2 = NULL;
+    TTF_CloseFont( scoreboardFont );
+    scoreboardFont = NULL;
+    TTF_CloseFont( highscoreFont );
+    highscoreFont = NULL;
 
 	//Quit SDL subsystems
 	SDL_Quit();
@@ -367,6 +386,8 @@ bool Engine::run() {
             {
                 quit = true;
             }
+            SDL_Color textcolor = {255,255,255};
+            this->highscoreText.loadFromRenderedText(to_string(this->get_highscore()), textcolor, gRenderer, highscoreFont );
             if( e.type == SDL_KEYDOWN){
                 switch (e.key.keysym.sym)
                 {
@@ -380,8 +401,12 @@ bool Engine::run() {
                         menu = menu_instruction;
                         break;
                     case SDLK_h:
+                        {
                         menu = menu_highscore;
+                        this->highscoreText.render(gRenderer, 400, 400);
+                        SDL_RenderPresent(gRenderer);
                         break;
+                        }
                     case SDLK_m:
                         menu = menu_background;
                         break;
@@ -500,9 +525,7 @@ bool Engine::run() {
         }
         this->closeGameplay();
     }
-    for(int i = 0; i<10; i++){
-        cout<<this->get_highscore()[i]<<" ";
-    }
+
     // End game and free the memory
     this->close();
 
