@@ -15,11 +15,15 @@
 					<Add option="-g" />
 					<Add directory="SDL/SDL2-2.0.14/x86_64-w64-mingw32/include/SDL2" />
 					<Add directory="SDL/SDL2_image-2.0.5/x86_64-w64-mingw32/include/SDL2" />
+					<Add directory="SDL/SDL2_mixer-2.0.4/x86_64-w64-mingw32/include/SDL2" />
+					<Add directory="SDL/SDL2_ttf-2.0.15/x86_64-w64-mingw32/include/SDL2" />
 				</Compiler>
 				<Linker>
-					<Add option="-lmingw32 -lSDL2main -lSDL2 -lSDL2_image" />
+					<Add option="-lmingw32 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer" />
 					<Add directory="SDL/SDL2_image-2.0.5/x86_64-w64-mingw32/lib" />
 					<Add directory="SDL/SDL2-2.0.14/x86_64-w64-mingw32/lib" />
+					<Add directory="SDL/SDL2_mixer-2.0.4/x86_64-w64-mingw32/lib" />
+					<Add directory="SDL/SDL2_ttf-2.0.15/x86_64-w64-mingw32/lib" />
 				</Linker>
 			</Target>
 			<Target title="Release">
@@ -43,16 +47,19 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="Asteroid.cpp" />
+		<Unit filename="Asteroid.h" />
+		<Unit filename="Bullet.cpp" />
+		<Unit filename="Bullet.h" />
+		<Unit filename="Configs.h" />
 		<Unit filename="Engine.cpp" />
 		<Unit filename="Engine.h" />
 		<Unit filename="LTexture.cpp" />
 		<Unit filename="LTexture.h" />
-		<Unit filename="OtherObject.cpp" />
-		<Unit filename="OtherObject.h" />
 		<Unit filename="Ship.cpp" />
 		<Unit filename="Ship.h" />
-		<Unit filename="defines.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="score.txt" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
 		</Extensions>

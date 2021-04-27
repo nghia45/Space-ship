@@ -10,18 +10,16 @@ Ship::Ship(SDL_Renderer* &gRenderer) {
     this->setWidth(this->shipTexture.getWidth());
     // set the first position to render the Ship
     this->set_x(100);
-    this->set_y(100);
-
+    this->set_y(SCREEN_HEIGHT/3);
+    this->set_health(1);
 }
 
 Ship::~Ship() {
     //Free texture if it exists
     this->shipTexture.free();
 
-
     this->setWidth(0);
     this->setHeight(0);
-
 }
 
 void Ship::set_x(int x) {
@@ -38,6 +36,15 @@ void Ship::setWidth(int w) {
 
 void Ship::setHeight(int h) {
     this->shipHeight = h;
+}
+
+void Ship::set_velocity(int velocity) {
+    this->x_velocity = velocity;
+    this->y_velocity = velocity;
+}
+
+void Ship::set_angle(int angle){
+    this->angle = angle;
 }
 
 int Ship::getWidth() {
@@ -60,6 +67,14 @@ int Ship::get_y() {
     return this->y;
 }
 
+bool Ship::get_health() {
+    return this->health;
+}
+
+void Ship::set_health(int _health) {
+    this->health = _health;
+}
+
 bool Ship::loadMedia(SDL_Renderer* &gRenderer) {
     //Loading success flag
     bool success = true;
@@ -76,11 +91,6 @@ void Ship::renderCurrent(SDL_Renderer *&gRenderer) {
     /*
     TODO: draw the Ship character annimated
     */
-
-     //Clear screen
-     //SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
-     //SDL_RenderClear( gRenderer );
-
     //Render texture to screen
     this->shipTexture.render(gRenderer, this->get_x(), this->get_y(), NULL, angle);
 
@@ -102,9 +112,7 @@ void Ship::handleEvent( SDL_Event& e )
             case SDLK_DOWN:
                 angle += 20;
                 y_velocity += SHIP_VELOCITY;  break;
-            case SDLK_LEFT:
-                angle += 180;
-                x_velocity -= SHIP_VELOCITY;  break;
+            case SDLK_LEFT: x_velocity -= SHIP_VELOCITY;  break;
             case SDLK_RIGHT: x_velocity += SHIP_VELOCITY;  break;
         }
     }
@@ -120,14 +128,10 @@ void Ship::handleEvent( SDL_Event& e )
             case SDLK_DOWN:
                 angle -= 20;
                 y_velocity -= SHIP_VELOCITY; break;
-            case SDLK_LEFT:
-                angle -= 180;
-                x_velocity += SHIP_VELOCITY; break;
-            case SDLK_RIGHT:
-                x_velocity -= SHIP_VELOCITY; break;
+            case SDLK_LEFT: x_velocity += SHIP_VELOCITY; break;
+            case SDLK_RIGHT: x_velocity -= SHIP_VELOCITY; break;
         }
     }
-
 }
 
 void Ship::move()
@@ -151,5 +155,47 @@ void Ship::move()
         //Move back
         y -= y_velocity;
     }
+}
+
+bool Ship::checkColision(const SDL_Rect rect){
+    int leftA, leftB;
+    int rightA, rightB;
+    int topA, topB;
+    int bottomA, bottomB;
+
+    //Calculate the sides of ship
+    leftA = this->get_x();
+    rightA = this->get_x() + this->getWidth();
+    topA = this->get_y();
+    bottomA = this->get_y() + this->getHeight();
+
+    //Calculate the sides of rect
+    leftB = rect.x;
+    rightB = rect.x + rect.w;
+    topB = rect.y;
+    bottomB = rect.y + rect.h;
+    //If any of the sides from ship are outside of rect
+    if( bottomA <= topB )
+    {
+        return false;
+    }
+
+    if( topA >= bottomB )
+    {
+        return false;
+    }
+
+    if( rightA <= leftB )
+    {
+        return false;
+    }
+
+    if( leftA >= rightB )
+    {
+        return false;
+    }
+
+    //If none of the sides from ship are outside of rect
+    return true;
 }
 

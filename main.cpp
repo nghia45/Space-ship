@@ -1,11 +1,4 @@
-#include <iostream>
-#include <SDL.h>
-#include <SDL_image.h>
-
 #include "Engine.h"
-
-using namespace std;
-
 
 int main(int argc, char* args[]) {
     Engine *engine = new Engine();

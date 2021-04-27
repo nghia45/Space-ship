@@ -5,8 +5,8 @@
 #include<SDL_image.h>
 #include<iostream>
 #include "LTexture.h"
-#include "OtherObject.h"
-#include "defines.h"
+#include "Bullet.h"
+#include "Configs.h"
 
 using namespace std;
 
@@ -20,14 +20,19 @@ class Ship{
         void setVelocity(int v);
         void set_x(int x);
         void set_y(int y);
+        void set_velocity(int velocity);
+        void set_angle(int angle);
         int getWidth();
         int getHeight();
         int getVelocity();
         int get_x();
         int get_y();
+        void set_health(int health);
+        bool get_health();
 
         void handleEvent( SDL_Event& e );
 		void move();
+		bool checkColision(const SDL_Rect rect);
 
         void renderCurrent(SDL_Renderer* &gRenderer);
         bool loadMedia(SDL_Renderer* &gRenderer);
@@ -39,8 +44,7 @@ class Ship{
         // SDL_Texture *pacmanTexture;
         int shipWidth;
         int shipHeight;
-        //int state;
-
+        int health;
         int x_velocity = 0;
         int y_velocity = 0;
         int x;
