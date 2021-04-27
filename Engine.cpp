@@ -11,22 +11,22 @@
 
 using namespace std;
 
-//int* Engine::get_highscore(){
-//    int* highscore = new int[10];
-//    ifstream f;
-//    f.open("score.txt");
-//    if(f.is_open())
-//    {
-//        int num;
-//        while(!f.eof()){
-//            f>>num;
-//            *highscore=num;
-//            highscore++;
-//        }
-//    }
-//    f.close();
-//    return highscore;
-//}
+int* Engine::get_highscore(){
+    int* highscore = new int[10];
+    ifstream f;
+    f.open("score.txt");
+    if(f.is_open())
+    {
+        int num;
+        while(!f.eof()){
+            f>>num;
+            *highscore=num;
+            highscore++;
+        }
+    }
+    f.close();
+    return highscore;
+}
 
 bool Engine::initWindowAndRender() {
 
@@ -433,11 +433,11 @@ bool Engine::run() {
                     Mix_PlayChannel( -1, gameOverSound, 0 );
                     quit_game = true;
                     SDL_Delay(1000);
-                    this->gameOverText[0].render(gRenderer, 250, 300);
-                    this->gameOverText[1].render(gRenderer, 330, 420);
+                    this->gameOverText[0].render(gRenderer, 250, 200);
+                    this->gameOverText[1].render(gRenderer, 330, 320);
                     SDL_Color textcolor = {255,255,255};
                     this->gameOverScoreText.loadFromRenderedText(to_string(score), textcolor, gRenderer, gameOverFont_1);
-                    this->gameOverScoreText.render(gRenderer, 850, 420);
+                    this->gameOverScoreText.render(gRenderer, 850, 320);
                     this->gameOverText[2].render(gRenderer, 350, 500);
                     SDL_RenderPresent(gRenderer);
                     SDL_Delay(3000);
@@ -499,6 +499,9 @@ bool Engine::run() {
         SDL_Delay(50);
         }
         this->closeGameplay();
+    }
+    for(int i = 0; i<10; i++){
+        cout<<this->get_highscore()[i]<<" ";
     }
     // End game and free the memory
     this->close();
